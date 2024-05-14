@@ -2,10 +2,10 @@
 // Verifica si se proporciona un ID en la URL
 if (!isset($_GET["id"])) {
     exit("No se proporcionó un ID de producto.");
-
+}
 // Obtiene el ID del producto desde la URL
 $id_producto = $_GET["id"];
-}
+
 // Incluye el archivo de conexión a la base de datos
 include_once("../../db/conexion.php");
 
@@ -18,6 +18,7 @@ $producto = $sentencia->fetch(PDO::FETCH_OBJ);
 if ($producto === false) {
     exit("El producto no existe o no se encontró en la base de datos.");
 }
+
 ?>
 
 <form>

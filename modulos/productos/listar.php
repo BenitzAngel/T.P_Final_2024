@@ -5,8 +5,30 @@ $datos = $base_de_datos-> query("SELECT * FROM producto");
 $producto = $datos->fetchAll(PDO::FETCH_OBJ);
 ?>
 
+<!-- Agrega este script al final de tu archivo listar.php -->
+<script>
+    function agregarProducto() {
+      // console.log("Función agregarProducto() llamada.")
+        // Realiza una petición AJAX para obtener el contenido del formulario
+        $.get("modulos/productos/formulario.php", function(data) {
+          // console.log("Contenido del formulario recibido:", data);
+            // Inserta el contenido del formulario en el cuerpo de la ventana modal
+            $("#nuevo_productoModal").modal("show");
+        });
+    }
 
-<body>
+    function editarProducto(idproducto) {
+      console.log("ID del producto:", idproducto);
+      // console.log("Función agregarProducto() llamada.")
+        // Realiza una petición AJAX para obtener el contenido del formulario
+        $.get("modulos/productos/editar.php?id=", function(data) {
+          // console.log("Contenido del formulario recibido:", data);
+            // Inserta el contenido del formulario en el cuerpo de la ventana modal
+            $("#modificarModal").modal("show");
+        });
+    }
+</script>
+
 
 
 
@@ -50,8 +72,10 @@ $producto = $datos->fetchAll(PDO::FETCH_OBJ);
 					<td>
 
             <!-- <button type = "botton" class="btn btn-primary" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modificarModal">Modificar</button> -->
-            <a href="editar.php?id=<?php echo $producto->id_producto; ?>" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modificarModal">Modificar</a>
-
+           
+            <button id="editarProducto" onclick="editarProducto(<?php echo $producto->id_producto; ?>)" class="btn btn-primary">
+							<i>Modificar</i>
+						</button>
 					</td>
 
 
@@ -190,15 +214,4 @@ $producto = $datos->fetchAll(PDO::FETCH_OBJ);
   </div>
 </div>
 
-<!-- Agrega este script al final de tu archivo listar.php -->
-<script>
-    function agregarProducto() {
-      // console.log("Función agregarProducto() llamada.")
-        // Realiza una petición AJAX para obtener el contenido del formulario
-        $.get("modulos/productos/formulario.php", function(data) {
-          // console.log("Contenido del formulario recibido:", data);
-            // Inserta el contenido del formulario en el cuerpo de la ventana modal
-            $("#nuevo_productoModal").modal("show");
-        });
-    }
-</script>
+
