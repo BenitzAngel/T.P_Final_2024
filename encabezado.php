@@ -23,6 +23,9 @@ define('BASE_URL', '/panaderia/');
     <!-- jqueri -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+      <!-- Otros enlaces y metadatos -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"

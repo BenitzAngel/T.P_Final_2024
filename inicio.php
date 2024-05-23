@@ -12,14 +12,14 @@
                     <i class="lni lni-grid-alt"></i>
                 </button>
                 <div class="sidebar-logo">
-                    <a href="#">CodzSword</a>
+                    <a href="inicio.php">Panaderia La Reina</a>
                 </div>
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="#" class="sidebar-link" id="cliente" data-item="cliente" data-destino="<?php echo BASE_URL; ?>modulos/cliente/clientes.php">
                         <i class="lni lni-user"></i>
-                        <span>Profile</span>
+                        <span>Clientes</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -100,16 +100,30 @@
 
 
 <script>
+// $(document).ready(function() {
+//     $("#home").click(function() {
+//                 $.get("inicio.php", function(data) {
+//                     $("#workspace").html(data);
+//                 });
+//             });
+//         });
+
 $(document).ready(function() {
+    $("#cliente").click(function() {
+                $.get("modulos/cliente/clientes.php", function(data) {
+                    $("#workspace").html(data);
+                });
+            });
+        });
 
-
+$(document).ready(function() {
     $("#producto").click(function() {
                 $.get("modulos/productos/listar.php", function(data) {
                     $("#workspace").html(data);
                 });
             });
-
         });
+        
 </script>
 
 

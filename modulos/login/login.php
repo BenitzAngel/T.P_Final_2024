@@ -137,7 +137,13 @@
                             $("#mensajeSuccess").html("Inicio de Sesión Exitoso!");
                             $("#mensajeSuccess").show(); // Mostrar mensaje de éxito
                             $("#mensajeError").hide(); // Ocultar mensaje de error
-                            window.location.href = "../../inicio.php";
+                            // window.location.href = "../../inicio.php";
+
+                             // Retrasar la redirección por 2 segundos (2000 milisegundos)
+                            setTimeout(function() {
+                               window.location.href = "../../inicio.php";
+                            }, 2000); // Cambia este valor según tu preferencia de tiempo  2000 milisegundos (2 segundos)
+
                         } else {
                           
                             $("#mensajeError").html("Usuario o contraseña incorrectos.");
@@ -213,8 +219,8 @@
     </div>
     
     <!-- mensajes de error -->
-    <div class='correcto' id="mensajeSuccess" style= "text-align:center;"></div>
-    <div class='error' id="mensajeError" style= "text-align:center;"></div>
+    <div class='correcto' id="mensajeSuccess" style= "display: none; text-align:center;"></div>
+    <div class='error' id="mensajeError" style= "display: none; text-align:center;"></div>
 
     <div class="form-floating">
       <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingrese Usuario">

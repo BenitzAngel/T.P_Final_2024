@@ -19,14 +19,83 @@ $producto = $datos->fetchAll(PDO::FETCH_OBJ);
 
     function editarProducto(idproducto) {
       console.log("ID del producto:", idproducto);
+      // Construye la URL con el parámetro id
+      const url = `modulos/productos/editar.php?id=${idproducto}`;
+      // console.log("URL construida:", url);
+
+      // esta parte es la antigua &&&&&&&&&&&&&&&&&&&
       // console.log("Función agregarProducto() llamada.")
-        // Realiza una petición AJAX para obtener el contenido del formulario
-        $.get("modulos/productos/editar.php?id=", function(data) {
-          // console.log("Contenido del formulario recibido:", data);
+      // Realiza una petición AJAX para obtener el contenido del formulario
+
+      // $.get("modulos/productos/editar.php?id=", { id: idproducto },function(data) {
+        // console.log("Contenido del formulario recibido:", data);
             // Inserta el contenido del formulario en el cuerpo de la ventana modal
-            $("#modificarModal").modal("show");
-        });
+            // $("#modificarModal").modal("show");
+      //}).fail(function() {
+      //alert("Error al cargar el formulario.");
+      // });
+      //   }&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+      // Realiza una petición AJAX para obtener el contenido del formulario
+      $.get(url, function(data) {
+        // console.log("Contenido del formulario recibido:", data);
+        // Inserta el contenido del formulario en el cuerpo de la ventana modal
+        $("#modificarModal .modal-body").html(data);
+        // Muestra el modal
+        $("#modificarModal").modal("show");
+      }).fail(function() {
+        alert("Error al cargar el formulario.");
+      });
     }
+
+    function eliminarProducto(idproducto, nombreProducto) {
+      console.log("ID del producto:", idproducto, nombreProducto);
+		// Utiliza SweetAlert en lugar de confirm y alert
+		Swal.fire({
+			title: '¿Estás seguro?',
+			text: `¿Estás seguro de que deseas eliminar el producto "${nombreProducto}"?`,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Sí, eliminar',
+			cancelButtonText: 'Cancelar'
+		}).then((result) => {
+			if (result.isConfirmed) {
+        console.log("AJAX GET URL:", "modulos/productos/eliminar.php?id=" + idproducto);
+				$.get("modulos/productos/eliminar.php?id=" + idproducto, function (data) {
+          console.log("Response from server:", data);
+					try {
+						var response = JSON.parse(data);
+
+						if (response.status === "success") {
+							// La eliminación fue exitosa, actualizar la vista
+							console.log("Operacion exitosa");
+							$.get("modulos/productos/listar.php", function (data) {
+								$("#workspace").html(data);
+							});
+						} else {
+							// Hubo un error, mostrar el mensaje de error con SweetAlert
+							console.error("Error al eliminar producto:", response.message);
+							Swal.fire({
+								icon: 'error',
+								title: 'Error',
+								text: 'Error al eliminar producto. ' + response.message
+							});
+						}
+					} catch (error) {
+						// Manejar errores al analizar JSON con SweetAlert
+						console.error("Error al analizar respuesta JSON:", error);
+						Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: 'Error al analizar respuesta JSON.'
+						});
+					}
+				});
+			}
+		});
+	}
 </script>
 
 
@@ -81,8 +150,11 @@ $producto = $datos->fetchAll(PDO::FETCH_OBJ);
 
 					<td>
 
-          <button type = "botton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal">Eliminar</button>
+          <!-- <button type = "botton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal">Eliminar</button> -->
 
+          <button id="eliminarProducto" onclick="eliminarProducto(<?php echo $producto->id_producto; ?>, '<?php echo htmlspecialchars($producto->nombre, ENT_QUOTES, 'UTF-8'); ?>')" class="btn btn-primary">
+							<i>Eliminar</i>
+						</button>
 						
 					</td>
 				</tr>
