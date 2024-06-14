@@ -1,101 +1,48 @@
 <?php
-
-// Incluye el archivo de conexión a la base de datos
 include_once("../../db/conexion.php");
 
-if ($base_de_datos === false) {
-  exit("Error al conectar a la base de datos.");
-}
-
-
-// Verifica si se proporciona un ID en la URL
-if (!isset($_GET["id"])) {
-    exit("No se proporcionó un ID de producto.");
-}
-// Obtiene el ID del producto desde la URL
-$id_producto = $_GET["id"];
-
-
-
-// Prepara y ejecuta la consulta para obtener los datos del producto
-$sentencia = $base_de_datos->prepare("SELECT * FROM producto WHERE id_producto = ?;");
-$sentencia->execute([$id_producto]);
-$producto = $sentencia->fetch(PDO::FETCH_OBJ);
-
-// Verifica si se encontró el producto
-if ($producto === false) {
-    exit("El producto no existe o no se encontró en la base de datos.");
-}
-
-?>
-
-<form id="formulario_editar">
-
-<input type="hidden" id="id_producto" name="id_producto" value="<?php echo htmlspecialchars($producto->id_producto); ?>">
-
-
-<div class="mb-3">
-  <label for="recipient-name" class="col-form-label">Nombre:</label>
-  <input type="text" class="form-control" id="nombre" name= "nombre" value="<?php echo $producto->nombre; ?>">
-</div>
-
-<div class="mb-3">
-  <label for="message-text" class="col-form-label">Descripción:</label>
-  <textarea class="form-control" id="descripcion" name="descripcion"><?php echo htmlspecialchars($producto->descripcion); ?></textarea></div>
-
-<div class="mb-3">
-  <label for="fecha" class="col-form-label">Fecha de Elaboración:</label>
-  <input type="date" class="form-control" id="fecha" name="fecha" value="<?php echo $producto->fecha_ingreso ; ?>">
-</div>
-
-<div class="mb-3">
-  <label for="cantidad" class="col-form-label">Cantidad (kg):</label>
-  <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo $producto->cantidad; ?>">
-</div>
-
-<div class="mb-3">
-  <label for="precio_venta" class="col-form-label">Precio de Venta:</label>
-  <input type="number" step="0.01" class="form-control" id="precio_venta" name="precio_venta" value="<?php echo $producto->precio; ?>">
-</div>
-
-<div class="modal-footer">
-     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-    <button type="submit"  class="btn btn-primary">Guardar</button>
-</div>
-</form>
-
-
-<script>
-$("#formulario_editar").submit(function(event) {
-    event.preventDefault();
-    ("Formulario enviado"); // Agregado para verificar si el evento se activa correctamente
-    var formData = $(this).serialize();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+    $nombre = $_POST['nombre'];
+    $descripcion = $_POST['descripcion'];
+    $precio = $_POST['precio'];
+    $stock_nuevo = $_POST['stock'];
+    $unidad = $_POST['unidad'];
     
-    $.ajax({
-        type: "POST",
-        url: "modulos/productos/guardarDatosEditados.php",
-        data: formData,
-        dataType: "json",
-        success: function(response) {
-            if (response.status === "success") {
-                // Éxito: manejar según necesidades
-                console.log("Operación exitosa");
-                $.get("modulos/productos/listar.php", function(data) {
-                    $("#workspace").html(data);
-                });
-                // Cerrar la ventana modal después de guardar
-                $("#modificarModal").modal("hide");
-            } else {
-                // Error: manejar según necesidades
-                console.error("Error en el servidor:", response.message);
-                alert("Error en el servidor: " + response.message);
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            // Error de conexión o error no esperado
-            console.error("Error en la solicitud AJAX:", textStatus, errorThrown);
-            alert("Error en la solicitud AJAX. Por favor, inténtalo de nuevo.");
+    // Obtener el stock actual del producto antes de la actualización
+    $sql_stock_actual = "SELECT stock FROM Productos WHERE id = ?";
+    $stmt_stock_actual = $base_de_datos->prepare($sql_stock_actual);
+    $stmt_stock_actual->execute([$id]);
+    $producto = $stmt_stock_actual->fetch(PDO::FETCH_OBJ);
+    $stock_actual = $producto->stock;
+    
+    // Calcular la diferencia en stock
+    $diferencia_stock = $stock_nuevo - $stock_actual;
+    
+    $sql = "UPDATE Productos SET nombre = ?, descripcion = ?, precio = ?, stock = ?, unidad = ? WHERE id = ?";
+    $stmt = $base_de_datos->prepare($sql);
+    $resultado = $stmt->execute([$nombre, $descripcion, $precio, $stock_nuevo, $unidad, $id]);
+    
+    if ($resultado) {
+        // Obtener los ingredientes y sus cantidades de la receta
+        $sql_ingredientes = "SELECT id_ingrediente, cantidad_ingrediente FROM ProductosIngredientes WHERE id_producto = ?";
+        $stmt_ingredientes = $base_de_datos->prepare($sql_ingredientes);
+        $stmt_ingredientes->execute([$id]);
+        $ingredientes = $stmt_ingredientes->fetchAll(PDO::FETCH_OBJ);
+        
+        // Actualizar el stock de los ingredientes
+        foreach ($ingredientes as $ingrediente) {
+            $cantidad_total = $ingrediente->cantidad_ingrediente * $diferencia_stock;
+            $sql_actualizar_stock = "UPDATE Ingredientes SET stock = stock - ? WHERE id = ?";
+            $stmt_actualizar_stock = $base_de_datos->prepare($sql_actualizar_stock);
+            $stmt_actualizar_stock->execute([$cantidad_total, $ingrediente->id_ingrediente]);
         }
-    });
-});
-</script>
+        
+        $response = array("status" => "success");
+    } else {
+        $response = array("status" => "error", "message" => $stmt->errorInfo());
+    }
+    
+    echo json_encode($response);
+}
+?>

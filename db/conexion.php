@@ -1,7 +1,7 @@
 <?php
 $contraseña = "";
 $usuario = "root";
-$nombre_base_de_datos = "panaderia_reina";
+$nombre_base_de_datos = "panaderiadb";
 try{
 	$base_de_datos = new PDO('mysql:host=localhost;dbname=' . $nombre_base_de_datos, $usuario, $contraseña);
 	$base_de_datos->query("set names utf8;");

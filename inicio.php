@@ -17,44 +17,51 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link" id="cliente" data-item="cliente" data-destino="<?php echo BASE_URL; ?>modulos/cliente/clientes.php">
+                    <!-- <a href="#" class="sidebar-link" id="cliente" data-item="cliente" data-destino="<?php echo BASE_URL; ?>modulos/cliente/clientes.php">
                         <i class="lni lni-user"></i>
                         <span>Clientes</span>
-                    </a>
+                    </a> -->
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link" id="producto" data-item="producto" data-destino="<?php echo BASE_URL; ?>modulos/productos/listar.php">
+                    <!-- <a href="#" class="sidebar-link" id="producto" data-item="producto" data-destino="<?php echo BASE_URL; ?>modulos/productos/listar.php">
                         <i class="lni lni-agenda"></i>
                         <span>Productos Panificados</span>
-                    </a>
+                    </a> -->
                 </li>
+
+                <!-- venta -->
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
-                        data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
-                        <i class="lni lni-protection"></i>
-                        <span>Auth</span>
+                        data-bs-target="#venta" aria-expanded="false" aria-controls="venta">
+                        <i class="lni lni-investment"></i>
+                        <span>Ventas</span>
                     </a>
-                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <ul id="venta" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Login</a>
+                            <a href="#" class="sidebar-link" id="clientes" data-item="clientes" data-destino="<?php echo BASE_URL; ?>modulos/clientes/listar.php">
+                            <i class="lni lni-users"></i>
+                                Clientes
+                            </a>
                         </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Register</a>
+                        <a href="#" class="sidebar-link" id="factura_venta" data-item="factura_venta" data-destino="<?php echo BASE_URL; ?>modulos/ventas/listar.php">
+                        <i class="lni lni-ticket-alt"></i>
+                                Factura de ventas
+                            </a>
                         </li>
                     </ul>
                 </li>
-                <li class="sidebar-item">
+                <!-- <li class="sidebar-item">
                     <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
                         data-bs-target="#multi" aria-expanded="false" aria-controls="multi">
                         <i class="lni lni-layout"></i>
-                        <span>Multi Level</span>
+                        <span>Inventario</span>
                     </a>
                     <ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link collapsed" data-bs-toggle="collapse"
-                                data-bs-target="#multi-two" aria-expanded="false" aria-controls="multi-two">
-                                Two Links
-                            </a>
+                        <a href="#" class="sidebar-link" id="producto" data-item="producto" data-destino="<?php echo BASE_URL; ?>modulos/productos/listar.php">
+                            <i class="lni lni-agenda"></i>
+                            <span>Productos Panificados</span>
+                        </a>
                             <ul id="multi-two" class="sidebar-dropdown list-unstyled collapse">
                                 <li class="sidebar-item">
                                     <a href="#" class="sidebar-link">Link 1</a>
@@ -65,17 +72,67 @@
                             </ul>
                         </li>
                     </ul>
-                </li>
+                </li> -->
+
+                <!-- compra -->
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
-                        <i class="lni lni-popup"></i>
-                        <span>Notification</span>
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#compra" aria-expanded="false" aria-controls="compra">
+                        <i class="lni lni-revenue"></i>
+                        <span>Compra</span>
                     </a>
+                    <ul id="compra" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link" id="proveedor" data-item="proveedor" data-destino="<?php echo BASE_URL; ?>modulos/proveedores/listar.php">
+                            <i class="lni lni-network"></i>
+                                Proveedores
+                            </a>
+                        </li>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link" id="factura_compra" data-item="factura_compra" data-destino="<?php echo BASE_URL; ?>modulos/gastos/listar.php">
+                            <i class="lni lni-ticket-alt"></i>
+                                Facturas de compras
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- inventario -->
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse"
+                        data-bs-target="#inventario" aria-expanded="false" aria-controls="inventario">
+                        <i class="lni lni-package"></i>
+                        <span>Inventario</span>
+                    </a>
+                    <ul id="inventario" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                        
+                        <li class="sidebar-item">
+                        <a href="#" class="sidebar-link" id="ingredientes" data-item="ingredientes" data-destino="<?php echo BASE_URL; ?>modulos/ingredientes/listar.php">
+                            <i class="lni lni-clipboard"></i>
+                                Ingredientes
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link" id="recetas" data-item="recetas" data-destino="<?php echo BASE_URL;?>modulos/recetas/listar_recetas.php">
+                            <i class="lni lni-pencil-alt"></i>
+                                Recetas
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                        <a href="#" class="sidebar-link" id="producto" data-item="producto" data-destino="<?php echo BASE_URL; ?>modulos/productos/listar.php">
+                        <i class="lni lni-producthunt"></i>
+                            Productos Panificados
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link">
+                    <a href="#" id="ayuda"class="sidebar-link">
                         <i class="lni lni-cog"></i>
-                        <span>Setting</span>
+                        <span>Ayuda</span>
                     </a>
                 </li>
             </ul>
@@ -109,8 +166,8 @@
 //         });
 
 $(document).ready(function() {
-    $("#cliente").click(function() {
-                $.get("modulos/cliente/clientes.php", function(data) {
+    $("#clientes").click(function() {
+                $.get("modulos/clientes/listar.php", function(data) {
                     $("#workspace").html(data);
                 });
             });
@@ -123,7 +180,52 @@ $(document).ready(function() {
                 });
             });
         });
+
+$(document).ready(function() {
+    $("#proveedor").click(function() {
+                $.get("modulos/proveedores/listar.php", function(data) {
+                    $("#workspace").html(data);
+                });
+            });
+        });
+
+$(document).ready(function() {
+    $("#ingredientes").click(function() {
+                $.get("modulos/ingredientes/listar.php", function(data) {
+                    $("#workspace").html(data);
+                });
+            });
+        });
         
+$(document).ready(function() {
+    $("#recetas").click(function() {
+                $.get("modulos/recetas/listar_recetas.php", function(data) {
+                    $("#workspace").html(data);
+                });
+            });
+        });
+
+$(document).ready(function() {
+    $("#factura_venta").click(function() {
+                $.get("modulos/ventas/listar.php", function(data) {
+                    $("#workspace").html(data);
+                });
+            });
+        });
+        
+        $(document).ready(function() {
+    $("#factura_compra").click(function() {
+                $.get("modulos/gastos/listar.php", function(data) {
+                    $("#workspace").html(data);
+                });
+            });
+        });
+
+        document.getElementById('ayuda').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevenir el comportamiento por defecto del enlace
+            console.log("Botón de ayuda clickeado."); // Verificación de evento
+            window.open("Manual_del_Usuario.pdf", '_blank');
+        });
 </script>
 
 

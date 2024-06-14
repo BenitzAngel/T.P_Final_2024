@@ -5,8 +5,8 @@ if (empty($_SESSION['usuario'])) {
     header("location: index.php");
 }
 
-define('BASE_URL', '/panaderia/');
 
+define('BASE_URL', '/panaderia');
 
 
 ?>
@@ -22,6 +22,12 @@ define('BASE_URL', '/panaderia/');
 
     <!-- jqueri -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- jQuery UI (incluyendo Autocomplete) -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   
+
 
       <!-- Otros enlaces y metadatos -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
